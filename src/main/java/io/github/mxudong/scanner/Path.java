@@ -54,12 +54,21 @@ public class Path {
     }
 
     /**
-     * Determin whether the file is a jar file.
+     * Determine whether the file is a jar file.
      *
      * @return if target file is jar, it will return true.
      */
     public boolean isJar() {
         return filePath != null && (filePath.endsWith(".jar") && innerPath == null);
+    }
+
+    /**
+     * determine whether the path strong no info.
+     *
+     * @return true or flase
+     */
+    public boolean isNull() {
+        return (filePath == null || filePath.length() == 0);
     }
 
     /**
@@ -73,8 +82,13 @@ public class Path {
         return filePath != null && filePath.endsWith(".class") && innerPath == null;
     }
 
+    /**
+     * convert the Path's file path and inner path to virtual path.
+     *
+     * @return virtual path
+     */
     public String convertVirtualPath() {
-        return null;
+        return virtualPath(filePath, innerPath);
     }
 
     /**
@@ -114,5 +128,23 @@ public class Path {
             res[i] = res[i].replaceAll("#1", "#");
         }
         return res;
+    }
+
+    /**
+     * create new path from virtual path. If recover paths from virtual path has no
+     * path, will return null path(it mean that the {@code path.isNull == true}.
+     *
+     * @param virtualPath from Path.convertVirtualPath()
+     * @return new Path
+     */
+    public static Path generatorFromVirtualPath(String virtualPath) {
+        String[] paths = recoverPath(virtualPath);
+        if (paths.length == 0) {
+            return new Path("");
+        } else if (paths.length == 1) {
+            return new Path(paths[0]);
+        } else {
+            return new Path(paths[0], paths[1]);
+        }
     }
 }
