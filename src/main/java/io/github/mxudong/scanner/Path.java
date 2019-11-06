@@ -147,4 +147,13 @@ public class Path {
             return new Path(paths[0], paths[1]);
         }
     }
+
+    /**
+     * will return virtual path
+     * @return virtual path
+     */
+    @Override
+    public String toString() {
+        return convertVirtualPath();
+    }
 }
