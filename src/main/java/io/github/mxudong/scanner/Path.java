@@ -24,12 +24,24 @@ public class Path {
 
     private String innerPath;
 
+    /**
+     * the construction for file.
+     *
+     * @param filePath target file location path
+     */
     public Path(String filePath) {
-
+        this(filePath, "");
     }
 
+    /**
+     * the construction for class in jar file
+     *
+     * @param jarFile     target jar file
+     * @param packageName class' package name
+     */
     public Path(String jarFile, String packageName) {
-
+        this.filePath = jarFile;
+        this.innerPath = packageName;
     }
 
     /**
@@ -79,7 +91,7 @@ public class Path {
         }
         StringBuilder res = new StringBuilder();
         for (String path : paths) {
-            res.append(path.replaceAll("#", "#1"));
+            res.append(path != null ? path.replaceAll("#", "#1") : "");
             res.append("#2");
         }
         return res.substring(0, res.length() - 2);
