@@ -149,7 +149,17 @@ public class Path {
     }
 
     /**
+     * generator the null path object.
+     *
+     * @return null path object.
+     */
+    public static Path generatorNullPath() {
+        return new Path("");
+    }
+
+    /**
      * will return virtual path
+     *
      * @return virtual path
      */
     @Override
