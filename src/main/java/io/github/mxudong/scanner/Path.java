@@ -61,5 +61,46 @@ public class Path {
         return filePath != null && filePath.endsWith(".class") && innerPath == null;
     }
 
+    public String convertVirtualPath() {
+        return null;
+    }
 
+    /**
+     * virtual the path, replace all the {@code #} to {@code #1}.
+     * <p>
+     * And will use {@code #2} connect all path.
+     *
+     * @param paths target path
+     * @return virtual path
+     */
+    public static String virtualPath(String... paths) {
+        if (paths == null) {
+            return "";
+        }
+        StringBuilder res = new StringBuilder();
+        for (String path : paths) {
+            res.append(path.replaceAll("#", "#1"));
+            res.append("#2");
+        }
+        return res.substring(0, res.length() - 2);
+    }
+
+
+    /**
+     * recover the target virtual path to actual path.
+     *
+     * @param virtualPath from the Path.VirtualPath
+     * @return string[]
+     */
+    public static String[] recoverPath(String virtualPath) {
+        if (virtualPath == null) {
+            return new String[0];
+        }
+
+        String[] res = virtualPath.split("#2");
+        for (int i = 0; i < res.length; i++) {
+            res[i] = res[i].replaceAll("#1", "#");
+        }
+        return res;
+    }
 }
