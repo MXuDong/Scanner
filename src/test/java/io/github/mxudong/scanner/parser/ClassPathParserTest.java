@@ -3,6 +3,7 @@ package io.github.mxudong.scanner.parser;
 import io.github.mxudong.scanner.Path;
 import org.junit.Test;
 
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -16,11 +17,13 @@ public class ClassPathParserTest {
     }
 
     @Test
-    public void testToPathWithNormalClass() {
+    public void testToPathWithNormalClass() throws URISyntaxException {
         ClassPathParser classPathParser = new ClassPathParser(ClassPathParserTest.class);
         Path path = classPathParser.toPath();
-        assert path != null;
+        System.out.println(Path.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+        System.out.println(Path.class.getResource(".").toURI().getPath()  );
         System.out.println(path);
+        System.out.println(Arrays.toString(Path.recoverPath(path.toString())));
     }
 
     @Test
@@ -37,6 +40,5 @@ public class ClassPathParserTest {
         System.out.println(Arrays.toString(Path.recoverPath(Path.virtualPath("f://test##1"))));
         System.out.println(Arrays.toString(Path.recoverPath(Path.virtualPath(null))));
         System.out.println(Arrays.toString(Path.recoverPath(Path.virtualPath(""))));
-
     }
 }
