@@ -174,6 +174,15 @@ public class Path {
     }
 
     /**
+     * generator file from file path without inner path
+     *
+     * @return file
+     */
+    public File generatorFile() {
+        return new File(filePath);
+    }
+
+    /**
      * will return virtual path
      *
      * @return virtual path
