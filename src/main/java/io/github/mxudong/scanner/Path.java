@@ -159,8 +159,6 @@ public class Path {
         return new Path("");
     }
 
-    public static final String JAR_FILE_POSTFIX = ".jar";
-
     /**
      * generator path from file.
      *
