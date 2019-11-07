@@ -23,6 +23,10 @@ public abstract class AbstractDirectory {
 
     Path currentFilePath;
 
+    /**
+     * The construction, although it is public, it should by Factory,
+     * @param targetPath
+     */
     public AbstractDirectory(Path targetPath) {
         this.currentFilePath = targetPath;
     }
