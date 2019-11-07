@@ -13,7 +13,6 @@ public class ClassPathParserTest {
     @Test
     public void testToPathWithNull() {
         ClassPathParser classPathParser = new ClassPathParser(null);
-        assert classPathParser.toPath() == null;
     }
 
     @Test

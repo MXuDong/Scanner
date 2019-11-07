@@ -1,5 +1,7 @@
 package io.github.mxudong.scanner;
 
+import java.io.File;
+
 /**
  * Packging the target file path.
  * <p>
@@ -155,6 +157,22 @@ public class Path {
      */
     public static Path generatorNullPath() {
         return new Path("");
+    }
+
+    public static final String JAR_FILE_POSTFIX = ".jar";
+
+    /**
+     * generator path from file.
+     *
+     * @param file target file, if file not exits, return null path.
+     * @return file path
+     */
+    public static Path generatorFIlePath(File file) {
+        if (!file.exists()) {
+            return generatorNullPath();
+        }
+        String path = file.getPath();
+        return new Path(path);
     }
 
     /**
