@@ -2,6 +2,7 @@ package io.github.mxudong.scanner.fs;
 
 import io.github.mxudong.scanner.Path;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,17 +19,21 @@ import java.util.List;
  */
 public abstract class AbstractDirectory {
 
-    List<AbstractDirectory> sonDirectories;
-    List<AbstractFile> sonFiles;
+    private ArrayList<AbstractDirectory> sonDirectories;
+    private ArrayList<AbstractFile> sonFiles;
 
-    Path currentFilePath;
+    private Path currentFilePath;
 
     /**
      * The construction, although it is public, it should by Factory,
-     * @param targetPath
+     *
+     * @param targetPath target path
      */
     public AbstractDirectory(Path targetPath) {
         this.currentFilePath = targetPath;
+        sonDirectories = new ArrayList<>();
+        sonFiles = new ArrayList<>();
+
     }
 
     /**
