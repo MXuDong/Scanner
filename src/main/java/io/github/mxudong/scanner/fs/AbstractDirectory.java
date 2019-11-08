@@ -65,7 +65,7 @@ public abstract class AbstractDirectory {
      * @param diFun the function of director iterator
      */
     public void doDirectoryIterator(DirectoryIteratorFun diFun) {
-        if (sonDirectories != null) {
+        if (sonDirectories != null && diFun != null) {
             for (AbstractDirectory ad : sonDirectories) {
                 diFun.iterator(ad);
             }
@@ -78,7 +78,7 @@ public abstract class AbstractDirectory {
      * @param fiFun the function of file iterator
      */
     public void doFileDirectoryIterator(FileItoratorFun fiFun) {
-        if (sonFiles != null) {
+        if (sonFiles != null && fiFun != null) {
             for (AbstractFile af : sonFiles) {
                 fiFun.iterator(af);
             }
@@ -92,12 +92,28 @@ public abstract class AbstractDirectory {
      * @param fiFun the function of file iterator
      */
     public void doDeepIterator(DirectoryIteratorFun diFun, FileItoratorFun fiFun) {
-        doFileDirectoryIterator(fiFun);
 
-        doDirectoryIterator((ad) -> {
-            ad.doFileDirectoryIterator(fiFun);
-            ad.doDirectoryIterator(diFun);
-        });
+
+        doFileDirectoryIterator(fiFun);
+        doDirectoryIterator(diFun);
+
+        for (AbstractDirectory ad : sonDirectories) {
+            ad.doDeepIterator(diFun, fiFun);
+        }
+    }
+
+    public List<AbstractFile> checkAllFiles(CheckFileFilter cff) {
+        final List<AbstractFile> r = new ArrayList<>();
+        final CheckFileFilter fcff = cff == null ? (af) -> true : cff;
+        doDeepIterator(
+                null,
+                (af) -> {
+                    if (fcff.canAccess(af)) {
+                        r.add(af);
+                    }
+                }
+        );
+        return r;
     }
 
     /**

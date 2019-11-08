@@ -182,6 +182,9 @@ public class Path {
      * @return file
      */
     public File generatorFile() {
+        if(this.isNull()){
+            return new File("");
+        }
         return new File(filePath);
     }
 

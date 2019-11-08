@@ -13,7 +13,14 @@ public class DefaultCommonDirectoryTest {
     public void test1() throws URISyntaxException {
         Path path = new Path(DefaultCommonDirectoryTest.class.getResource("/").toURI().getPath());
         DefaultCommonDirectory defaultCommonDirectory = new DefaultCommonDirectory(path);
-        System.out.println(defaultCommonDirectory);
+        defaultCommonDirectory.doDeepIterator(
+                (ad)->{
+                    System.out.println(ad.currentFilePath);
+                },
+                (af)->{
+                    System.out.println(af.getCurrentFilePath());
+                }
+        );
     }
 
 }
