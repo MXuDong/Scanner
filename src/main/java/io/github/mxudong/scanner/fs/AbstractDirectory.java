@@ -33,7 +33,7 @@ public abstract class AbstractDirectory {
         this.currentFilePath = targetPath;
         sonDirectories = new ArrayList<>();
         sonFiles = new ArrayList<>();
-
+        build();
     }
 
     /**
@@ -41,10 +41,23 @@ public abstract class AbstractDirectory {
      * may change info about that. Like user create new file operation will change,
      * but the program can not get any info about change.
      * <p>
-     * For different type of directory, the refresh may different. For every sub class
-     * must implement of this method.
+     * This method cost many resource, the sub class of this should override this
+     * method.
+     * <p>
+     * Default method will rebuild by method {@code build()}, and set the value empty.
      */
-    abstract void reFresh();
+    void reFresh() {
+        //reset list of values
+        sonDirectories = new ArrayList<>();
+        sonFiles = new ArrayList<>();
+        build();
+    }
+
+    /**
+     * build the values from target path, for different directory has different behavior.
+     * So the sub class must implement this method.
+     */
+    abstract void build();
 
     /**
      * Do iterator of directory in this AbstractDirectory
