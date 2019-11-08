@@ -10,8 +10,6 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
-
 public class UtilsTest {
 
     @Test
@@ -22,13 +20,13 @@ public class UtilsTest {
         defaultCommonDirectory.doDeepIterator(null,
                 System.out::println);
 
-        AbstractFile abstractFile = defaultCommonDirectory.checkAllFiles((af)->true).get(0);
+        AbstractFile abstractFile = defaultCommonDirectory.checkAllFiles((af) -> true).get(0);
 
 
         Utils.FileInputStreamUtil ufis = new Utils.FileInputStreamUtil(abstractFile.getCurrentFilePath());
         InputStream is = ufis.getInputStream();
         byte[] bytes = new byte[1024];
-        while (true){
+        while (true) {
             try {
                 if ((is.read(bytes) == -1)) break;
                 System.out.println(Arrays.toString(bytes));

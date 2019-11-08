@@ -63,7 +63,7 @@ public class Utils {
          * @return input file stream
          */
         public InputStream getInputStream() {
-            if(fileInputStream == null){
+            if (fileInputStream == null) {
                 return openInputStream();
             }
 
