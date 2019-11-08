@@ -86,6 +86,21 @@ public abstract class AbstractDirectory {
     }
 
     /**
+     * Do iterator in all file and directory in this directory
+     *
+     * @param diFun the function of directory iterator
+     * @param fiFun the function of file iterator
+     */
+    public void doDeepIterator(DirectoryIteratorFun diFun, FileItoratorFun fiFun) {
+        doFileDirectoryIterator(fiFun);
+
+        doDirectoryIterator((ad) -> {
+            ad.doFileDirectoryIterator(fiFun);
+            ad.doDirectoryIterator(diFun);
+        });
+    }
+
+    /**
      * get the target file path
      *
      * @return target file path
