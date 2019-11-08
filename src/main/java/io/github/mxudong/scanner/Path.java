@@ -22,6 +22,8 @@ import java.io.File;
 
 public class Path {
 
+    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+
     private String filePath;
 
     private String innerPath;
@@ -34,6 +36,7 @@ public class Path {
     public Path(String filePath) {
         this(filePath, "");
     }
+
 
     /**
      * the construction for class in jar file

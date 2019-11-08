@@ -19,10 +19,10 @@ import java.util.List;
  */
 public abstract class AbstractDirectory {
 
-    private ArrayList<AbstractDirectory> sonDirectories;
-    private ArrayList<AbstractFile> sonFiles;
+    protected ArrayList<AbstractDirectory> sonDirectories;
+    protected ArrayList<AbstractFile> sonFiles;
 
-    private Path currentFilePath;
+    protected Path currentFilePath;
 
     /**
      * The construction, although it is public, it should by Factory,
@@ -110,5 +110,14 @@ public abstract class AbstractDirectory {
      */
     public List<AbstractFile> getSonFiles() {
         return sonFiles;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractDirectory{" +
+                "sonDirectories=" + sonDirectories +
+                ", sonFiles=" + sonFiles +
+                ", currentFilePath=" + currentFilePath +
+                '}';
     }
 }

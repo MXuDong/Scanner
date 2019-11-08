@@ -16,22 +16,10 @@ import java.io.File;
  */
 public abstract class AbstractFile {
 
-    private File currentFile;
-
     private Path currentFilePath;
 
     public AbstractFile(Path path) {
         this.currentFilePath = path;
-        currentFile = currentFilePath.generatorFile();
-    }
-
-    /**
-     * getter of currentFile
-     *
-     * @return file
-     */
-    public File getCurrentFile() {
-        return currentFile;
     }
 
     /**
@@ -41,5 +29,12 @@ public abstract class AbstractFile {
      */
     public Path getCurrentFilePath() {
         return currentFilePath;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractFile{" +
+                "currentFilePath=" + currentFilePath +
+                '}';
     }
 }
