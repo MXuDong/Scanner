@@ -10,7 +10,7 @@
  * <p>
  * The utils packing the common utils.
  * <ol>
- * <li>1. FileInputStreamUtils packing the file input stream operation.</li>
+ * <li>FileInputStreamUtils packing the file input stream operation.</li>
  * </ol>
  */
 package io.github.mxudong.scanner.asmu;
