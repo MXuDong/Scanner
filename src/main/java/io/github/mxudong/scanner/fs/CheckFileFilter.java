@@ -6,7 +6,7 @@ package io.github.mxudong.scanner.fs;
  *
  * @author Dong
  * @version 1.0.0
- * @see AbstractDirectory#checkAllFiles()
+ * @see AbstractDirectory#checkAllFiles(CheckFileFilter) ()
  * @since 1.0.0
  */
 
