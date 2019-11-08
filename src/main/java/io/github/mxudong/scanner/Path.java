@@ -68,7 +68,7 @@ public class Path {
     }
 
     /**
-     * determine whether the path strong no info.
+     * Determine whether the path strong no info.
      *
      * @return true or flase
      */
