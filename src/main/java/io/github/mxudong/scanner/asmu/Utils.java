@@ -15,7 +15,7 @@ public class Utils {
     /**
      * packing the file input stream
      */
-    public class FileInputStreamUtil {
+    public static class FileInputStreamUtil {
         private File file;
         private FileInputStream fileInputStream;
 
