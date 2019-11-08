@@ -13,7 +13,7 @@ import java.io.File;
  * name.
  * <p>
  * For different type of path, this class provide some method to convert other
- * type of path. The path type is contain common Class file and Class in JarFile class.
+ * type of path. The path type is contain common Class file and Class in DefaultJarFile class.
  *
  * @author Dong
  * @version 1.0.0
@@ -194,4 +194,7 @@ public class Path {
     public String toString() {
         return convertVirtualPath();
     }
+
+    public static final String CLASS_FILE_POSTFIX = ".class";
+    public static final String JAR_FILE_POSTFIX = ".jar";
 }

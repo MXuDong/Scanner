@@ -11,7 +11,7 @@ public class DefaultCommonDirectoryTest {
 
     @Test
     public void test1() throws URISyntaxException {
-        Path path = new Path(DefaultCommonDirectoryTest.class.getResource(System.getProperty("file.separator")).toURI().getPath());
+        Path path = new Path(DefaultCommonDirectoryTest.class.getResource("/").toURI().getPath());
         DefaultCommonDirectory defaultCommonDirectory = new DefaultCommonDirectory(path);
         System.out.println(defaultCommonDirectory);
     }

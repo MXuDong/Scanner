@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * The supper class of DirectoryObject, this class cover many AbstractFile
  * and has other AbstractDirectory. The relationship between AbstractDirectory
- * and AbstractFil are not like directory and file. Just like JarFile, it is a file
+ * and AbstractFil are not like directory and file. Just like DefaultJarFile, it is a file
  * and also has inner file and the inner file can be read.
  * <p>
  * All the file path is virtual of {@code Path(io.github.mxudong.scanner.Path}.
@@ -25,7 +25,7 @@ public abstract class AbstractDirectory {
     protected Path currentFilePath;
 
     /**
-     * The construction, although it is public, it should by Factory,
+     * The construction.
      *
      * @param targetPath target path
      */
