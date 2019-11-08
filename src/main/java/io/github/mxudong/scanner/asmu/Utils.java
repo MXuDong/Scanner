@@ -64,7 +64,7 @@ public class Utils {
          */
         public InputStream getInputStream() {
             if(fileInputStream == null){
-                openInputStream();
+                return openInputStream();
             }
 
             return fileInputStream;
