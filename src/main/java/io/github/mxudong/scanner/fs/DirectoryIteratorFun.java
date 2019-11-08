@@ -4,8 +4,8 @@ package io.github.mxudong.scanner.fs;
  * Do iterator of AbstractDirectory.
  *
  * @author Dong
- * @since 1.0.0
  * @see AbstractDirectory#doDirectoryIterator(DirectoryIteratorFun)
+ * @since 1.0.0
  */
 @FunctionalInterface
 public interface DirectoryIteratorFun {

@@ -23,10 +23,13 @@ public class DefaultCommonDirectory extends AbstractDirectory {
     @Override
     void build() {
         File targetFile = currentFilePath.generatorFile();
-        if(targetFile.exists() && targetFile.isDirectory()){
+        if (targetFile.exists() && targetFile.isDirectory()) {
             File[] sonFiles = targetFile.listFiles();
-            for(File f : sonFiles){
-                if(f.isDirectory()){
+            if (sonFiles == null) {
+                return;
+            }
+            for (File f : sonFiles) {
+                if (f.isDirectory()) {
                     sonDirectories.add(new DefaultCommonDirectory(Path.generatorFIlePath(f)));
                 }
             }

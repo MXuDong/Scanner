@@ -33,7 +33,7 @@ public class ClassPathParser extends AbstractPathParser {
 
         if (targetClass != null) {
             String basePath = targetClass.getResource(".").getPath();
-            Path res = null;
+            Path res;
             if (basePath == null) {
 
                 //in the jar file
