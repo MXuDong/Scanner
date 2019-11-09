@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.List;
 
+@Deprecated
 public class UtilsTest {
 
     @Test
@@ -35,6 +37,20 @@ public class UtilsTest {
             }
         }
         ufis.closeInputStream();
+    }
+
+    @Test
+    public void test2() throws URISyntaxException {
+        Path path = new Path(this.getClass().getResource("/").toURI().getPath());
+        DefaultCommonDirectory defaultCommonDirectory = new DefaultCommonDirectory(path);
+        List<AbstractFile> abstractFiles = defaultCommonDirectory.checkAllFiles((af) -> true);
+
+        for(AbstractFile af : abstractFiles){
+            if(Utils.checkHasAnnotation(Deprecated.class, af.getCurrentFilePath())){
+                System.out.println(af);
+            }
+        }
+
     }
 
 }
