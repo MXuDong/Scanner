@@ -29,7 +29,7 @@ public class Utils {
             return false;
         }
         try {
-            //获取ASM.ClassReader.
+            //获取ASM.ClassReader.`
             ClassReader classReader = new ClassReader(fileInputStreamUtil.getInputStream());
             ClassNode classNode = new ClassNode();
             classReader.accept(classNode, 0);
