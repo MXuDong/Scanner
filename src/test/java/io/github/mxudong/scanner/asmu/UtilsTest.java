@@ -3,6 +3,7 @@ package io.github.mxudong.scanner.asmu;
 import io.github.mxudong.scanner.Path;
 import io.github.mxudong.scanner.fs.AbstractFile;
 import io.github.mxudong.scanner.fs.DefaultCommonDirectory;
+import io.github.mxudong.scanner.parser.ClassPathParser;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class UtilsTest {
 
     @Test
     public void test2() throws URISyntaxException {
-        Path path = new Path(this.getClass().getResource("/").toURI().getPath());
+        Path path = (new ClassPathParser(UtilsTest.class)).toPath();
         DefaultCommonDirectory defaultCommonDirectory = new DefaultCommonDirectory(path);
         List<AbstractFile> abstractFiles = defaultCommonDirectory.checkAllFiles((af) -> true);
 
