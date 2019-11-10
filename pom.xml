@@ -14,6 +14,11 @@
     </description>
     <url>https://github.com/MXuDong/Scanner</url>
 
+    <properties>
+        <char.set>UTF-8</char.set>
+        <target.java.version>1.8</target.java.version>
+    </properties>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm -->
         <dependency>
@@ -38,9 +43,18 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8></docencoding>
+                    <charset>${char.set}</charset>
+                    <encoding>${char.set}</encoding>
+                    <docencoding>${char.set}</docencoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${target.java.version}</source>
+                    <target>${target.java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
