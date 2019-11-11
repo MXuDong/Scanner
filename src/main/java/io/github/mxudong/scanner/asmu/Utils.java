@@ -108,45 +108,57 @@ public class Utils {
     public static class JarInputStreamUtil implements InputStreamUtil {
         private JarEntry innerEntry;
         private InputStream inputStream;
-
-        public JarInputStreamUtil(JarFile jarFile, JarEntry jarEntry) {
-            //
-        }
+        private Path targetPath;
 
         public JarInputStreamUtil(Path path) {
-            //
+            this.targetPath = path;
+            pathBuild();
         }
 
-        private void pathBuild(Path path) {
-            if (path.isNull() || !path.isInJar()) {
+        private void pathBuild() {
+            if (targetPath.isNull() || !targetPath.isInJar()) {
                 return;
             }
             try {
-                JarFile jarFile = new JarFile(path.getFilePath());
-                this.inputStream = jarFile.getInputStream(jarFile.getEntry(path.getInnerPath()));
-
-            } catch (IOException ignore) {
+                JarFile jarFile = new JarFile(targetPath.getFilePath());
+                this.inputStream = jarFile.getInputStream(jarFile.getEntry(targetPath.getInnerPath()));
+            } catch (IOException e) {
+                inputStream = null;
             }
+
         }
 
         @Override
         public boolean canBeRead() {
-            return false;
+            if (inputStream == null) {
+                return openInputStream() != null;
+            }
+            return true;
         }
 
         @Override
         public void closeInputStream() {
-
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException ignore) {
+                }
+                inputStream = null;
+            }
         }
 
         @Override
         public InputStream getInputStream() {
-            return null;
+            if (canBeRead()) {
+                return inputStream;
+            }
+            return inputStream;
         }
 
         @Override
         public InputStream openInputStream() {
-            return null;
+            pathBuild();
+            return inputStream;
         }
     }
 
