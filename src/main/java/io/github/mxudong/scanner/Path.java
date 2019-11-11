@@ -13,10 +13,15 @@ import java.io.File;
  * name.
  * <p>
  * For different type of path, this class provide some method to convert other
- * type of path. The path type is contain common Class file and Class in DefaultJarFile class.
+ * type of path. The path type is contain common Class file and Class in
+ * DefaultJarFile class.
+ * <p>
+ * If want build the Jar file inner class path, please use {@code DefaultJarFile}.
+ * Create the new Path of the jar file and build inner class by DefaultJarFile.
  *
  * @author Dong
  * @version 1.0.0
+ * @see io.github.mxudong.scanner.fs.DefaultJarFile
  * @since 1.0.0
  */
 
@@ -29,7 +34,7 @@ public class Path {
     private String innerPath;
 
     /**
-     * the construction for file.
+     * The construction for file.
      *
      * @param filePath target file location path
      */
@@ -39,7 +44,7 @@ public class Path {
 
 
     /**
-     * the construction for class in jar file
+     * The construction for class in jar file
      *
      * @param jarFile     target jar file
      * @param packageName class' package name
@@ -50,12 +55,39 @@ public class Path {
     }
 
     /**
+     * Get the file path
+     *
+     * @return the file path (String)
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * Get path in the file(like jar file inner path)
+     *
+     * @return inner path
+     */
+    public String getInnerPath() {
+        return innerPath;
+    }
+
+    /**
      * Determine whether the file is in a Jar File.
      *
      * @return If target file in the jar, it will return true. Else return false.
      */
     public boolean isInJar() {
         return filePath != null && (filePath.endsWith(".jar") && innerPath != null);
+    }
+
+    /**
+     * Determine whether the file is in a Jar File and is a class file.
+     *
+     * @return If target file in the jar, it will return true. Else return false;
+     */
+    public boolean isInJarClass() {
+        return isInJar() && innerPath.endsWith(CLASS_FILE_POSTFIX);
     }
 
     /**
@@ -182,7 +214,7 @@ public class Path {
      * @return file
      */
     public File generatorFile() {
-        if(this.isNull()){
+        if (this.isNull()) {
             return new File("");
         }
         return new File(filePath);
