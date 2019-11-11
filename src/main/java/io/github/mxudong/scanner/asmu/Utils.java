@@ -7,8 +7,13 @@ import jdk.internal.org.objectweb.asm.tree.ClassNode;
 
 import java.io.*;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
+ * ASM框架的支持。 包含很多ASM常用方法的封装。 用于检查目标类是否具有某种信息。
+ * 同时还封装了一个内部的文件操作， 保证文件操作的安全性。
+ *
  * @author Dong
  * @version 1.0.0
  * @since 1.0.0
@@ -24,6 +29,12 @@ public class Utils {
      * @return is the target path file have the target annotation.
      */
     public static boolean checkHasAnnotation(Class annotation, Path targetPath) {
+
+        //==================================分别处理jar文件和普通class文件
+//        InputStream is = null;
+//        if(!targetPath.isInJar()){
+//        }
+
         FileInputStreamUtil fileInputStreamUtil = new FileInputStreamUtil(targetPath);
         if (!fileInputStreamUtil.canBeRead()) {
             return false;
@@ -52,12 +63,42 @@ public class Utils {
         return false;
     }
 
+    public interface InputStreamUtil {
+
+    }
+
+    /**
+     * Jar文件输出流工具， 用来处理Jar中的Class文件。
+     */
+    public static class JarInputStreamUtil implements InputStreamUtil {
+        private JarEntry innerEntry;
+        private InputStream inputStream;
+
+        public JarInputStreamUtil(JarFile jarFile, JarEntry jarEntry) {
+            //
+        }
+
+        public JarInputStreamUtil(Path path) {
+            //
+        }
+
+        private void pathBuild(Path path) {
+            if (path.isNull() || !path.isInJar()) {
+                return;
+            }
+            try {
+                JarFile jarFile = new JarFile(path.getFilePath());
+            } catch (IOException ignore) {
+            }
+        }
+    }
+
     /**
      * packing the file input stream
      */
-    public static class FileInputStreamUtil {
+    public static class FileInputStreamUtil implements InputStreamUtil {
         private File file;
-        private FileInputStream fileInputStream;
+        private InputStream fileInputStream;
 
         /**
          * The construction, received type : file
