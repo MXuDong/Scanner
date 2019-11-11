@@ -13,7 +13,7 @@ public class DefaultJarEntry extends AbstractFile {
         super(path);
     }
 
-    public DefaultJarEntry(String jarFilePath, String className){
+    public DefaultJarEntry(String jarFilePath, String className) {
         this(new Path(jarFilePath, className));
     }
 }

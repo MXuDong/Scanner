@@ -2,6 +2,8 @@ package io.github.mxudong.scanner.fs;
 
 import io.github.mxudong.scanner.Path;
 
+import java.io.File;
+
 /**
  * The supper class of FileObject(not directory). All the implements can
  * read info for invoker.

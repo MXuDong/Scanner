@@ -11,8 +11,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * ASM框架的支持。 包含很多ASM常用方法的封装。 用于检查目标类是否具有某种信息。
- * 同时还封装了一个内部的文件操作， 保证文件操作的安全性。
+ * For ASM FrameWork, provide some method for use ASM and InputStream.
  *
  * @author Dong
  * @version 1.0.0
@@ -29,19 +28,27 @@ public class Utils {
      * @return is the target path file have the target annotation.
      */
     public static boolean checkHasAnnotation(Class annotation, Path targetPath) {
+        if (targetPath.isNull()) {
+            return false;
+        }
 
-        //==================================分别处理jar文件和普通class文件
-//        InputStream is = null;
-//        if(!targetPath.isInJar()){
-//        }
+        InputStreamUtil isu;
 
-        FileInputStreamUtil fileInputStreamUtil = new FileInputStreamUtil(targetPath);
-        if (!fileInputStreamUtil.canBeRead()) {
+        if (targetPath.isClassFile()) {
+            isu = new FileInputStreamUtil(targetPath);
+        } else if (targetPath.isInJarClass()) {
+            isu = new JarInputStreamUtil(targetPath);
+        } else {
+            return false;
+        }
+
+
+        if (!isu.canBeRead()) {
             return false;
         }
         try {
-            //获取ASM.ClassReader.`
-            ClassReader classReader = new ClassReader(fileInputStreamUtil.getInputStream());
+            //获取ASM.ClassReader.
+            ClassReader classReader = new ClassReader(isu.getInputStream());
             ClassNode classNode = new ClassNode();
             classReader.accept(classNode, 0);
             List<AnnotationNode> visibleAnnotations = classNode.visibleAnnotations;
@@ -51,7 +58,7 @@ public class Utils {
                     name = name.substring(1, name.length() - 1);
 //                    =====================处理注解相同的情况
                     if (name.equals(annotation.getName())) {
-                        fileInputStreamUtil.closeInputStream();
+                        isu.closeInputStream();
                         return true;
                     }
                 }
@@ -59,16 +66,44 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fileInputStreamUtil.closeInputStream();
+        isu.closeInputStream();
         return false;
     }
 
+    /**
+     * The input stream util interface, provide some method to ctrl the input stream.
+     */
     public interface InputStreamUtil {
 
+        /**
+         * Whether the file can be read.
+         *
+         * @return if can be read return true.
+         */
+        boolean canBeRead();
+
+        /**
+         * close input stream in safe operation.
+         */
+        void closeInputStream();
+
+        /**
+         * get inner file input stream, if not exits, it will open stream
+         *
+         * @return input file stream
+         */
+        InputStream getInputStream();
+
+        /**
+         * open file input stream, if is opened, will close it first.
+         *
+         * @return input stream
+         */
+        InputStream openInputStream();
     }
 
     /**
-     * Jar文件输出流工具， 用来处理Jar中的Class文件。
+     * Jar file util, about some method like convert jar file path to InputStream.
      */
     public static class JarInputStreamUtil implements InputStreamUtil {
         private JarEntry innerEntry;
@@ -88,8 +123,30 @@ public class Utils {
             }
             try {
                 JarFile jarFile = new JarFile(path.getFilePath());
+                this.inputStream = jarFile.getInputStream(jarFile.getEntry(path.getInnerPath()));
+
             } catch (IOException ignore) {
             }
+        }
+
+        @Override
+        public boolean canBeRead() {
+            return false;
+        }
+
+        @Override
+        public void closeInputStream() {
+
+        }
+
+        @Override
+        public InputStream getInputStream() {
+            return null;
+        }
+
+        @Override
+        public InputStream openInputStream() {
+            return null;
         }
     }
 
@@ -124,11 +181,8 @@ public class Utils {
             this(path.generatorFile());
         }
 
-        /**
-         * Whether the file can be read.
-         *
-         * @return if can be read return true.
-         */
+
+        @Override
         public boolean canBeRead() {
             if (fileInputStream == null) {
                 openInputStream();
@@ -137,9 +191,7 @@ public class Utils {
             return fileInputStream != null;
         }
 
-        /**
-         * close inner file input stream, if is closed, will do nothing
-         */
+        @Override
         public void closeInputStream() {
             if (fileInputStream != null) {
                 try {
@@ -151,11 +203,7 @@ public class Utils {
             }
         }
 
-        /**
-         * get inner file input stream, if not exits, it will open stream
-         *
-         * @return input file stream
-         */
+        @Override
         public InputStream getInputStream() {
             if (fileInputStream == null) {
                 return openInputStream();
@@ -164,11 +212,7 @@ public class Utils {
             return fileInputStream;
         }
 
-        /**
-         * open file input stream, if is opened, will close it first.
-         *
-         * @return input stream
-         */
+        @Override
         public InputStream openInputStream() {
             closeInputStream();
 
